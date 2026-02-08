@@ -3,6 +3,7 @@ package br.edu.ifg.luziania.controllres.model.bo;
 import br.edu.ifg.luziania.controllres.dto.LoginDTO;
 import br.edu.ifg.luziania.controllres.dto.UsuarioDTO;
 import br.edu.ifg.luziania.controllres.model.dao.UsuarioDAO;
+import br.edu.ifg.luziania.controllres.model.entity.EntityPessoa;
 import br.edu.ifg.luziania.controllres.model.entity.Usuario;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -19,11 +20,11 @@ public class AutenticacaoBO {
     UsuarioDAO usuarioDAO;
 
     public Response autenticar(LoginDTO credenciais) {
-        Usuario usuario = usuarioDAO.buscarUsuario(credenciais);
-        if (usuario == null) {
+        EntityPessoa pessoa = usuarioDAO.buscarPessoa(credenciais);
+        if (pessoa == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        UsuarioDTO dto = new UsuarioDTO(usuario.getId(), usuario.getNome(),usuario.getEmail(), false);
+        UsuarioDTO dto = new UsuarioDTO(pessoa.getId(), pessoa.getNome(),pessoa.getEmail(), false);
         return Response.ok(dto).build();
     }
 }

@@ -2,24 +2,32 @@ package br.edu.ifg.luziania.controllres.model.bo;
 
 import br.edu.ifg.luziania.controllres.dto.LoginDTO;
 import br.edu.ifg.luziania.controllres.model.dao.UsuarioDAO;
+import br.edu.ifg.luziania.controllres.model.entity.Administrador;
+import br.edu.ifg.luziania.controllres.model.entity.EntityPessoa;
 import br.edu.ifg.luziania.controllres.model.entity.Usuario;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 //metodo
+@RequestScoped
 public class LoguinBO {
 
     @Inject
     UsuarioDAO usuarioDAO;
 
-    public boolean login(LoginDTO credenciais) {
+    public String login(LoginDTO credenciais) {
+        EntityPessoa pessoa = usuarioDAO.buscarPessoa(credenciais);
 
-        Usuario usuario = usuarioDAO.buscarUsuario(credenciais);
-
-        if (usuario == null) {
-            return false;
+        if (pessoa == null) {
+            return null; // Credenciais inválidas
         }
 
-        // ⚠️ simples (não usar em produção sem hash)
-        return usuario.getSenha().equals(credenciais.getSenha());
+        // Verifica se a instância é de um Administrador
+        if (pessoa instanceof Administrador) {
+            return "admin";
+        }
+
+        // Caso contrário, é um Usuário comum
+        return "usuario";
     }
 }

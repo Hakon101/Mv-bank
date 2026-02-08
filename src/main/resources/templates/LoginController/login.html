@@ -134,25 +134,29 @@
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
 
-    const resposta = await fetch('/api/login', {
+    const resposta = await fetch('/logar', { // Chama o @Path("/logar") criado acima
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, senha })
+      body: JSON.stringify({
+        usuario: email, // O DTO usa "usuario"
+        senha: senha
+      })
     });
 
+// É aqui que você define a variável que o JavaScript não estava encontrando
     const resultado = await resposta.json();
 
     if (resposta.ok) {
       alert(resultado.message);
-      window.location.href = '/home'; // redireciona após sucesso
+      // Agora 'resultado.tipo' deve existir se o backend enviou
+      if (resultado.tipo === "admin") {
+        window.location.href = "/homeAdm";
+      } else {
+        window.location.href = "/home";
+      }
     } else {
       alert(resultado.error || 'Erro ao efetuar login.');
     }
-  }
-  if (resp.ok) {
-    localStorage.setItem("usuarioLogado", email); // salva o e-mail
-    alert(data.message);
-    window.location.href = "/home";
   }
 </script>
 
