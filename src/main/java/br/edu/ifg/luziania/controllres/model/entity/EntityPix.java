@@ -13,7 +13,7 @@ public class EntityPix {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
-    @Getter @Setter
+        @Getter @Setter
     private Integer id;
 
     private long remetenteId;
@@ -26,7 +26,7 @@ public class EntityPix {
     @Getter @Setter
     private int valor;
 
-    public EntityPix() {
+    protected EntityPix() {
 
     }
 

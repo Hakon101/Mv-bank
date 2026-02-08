@@ -21,7 +21,7 @@ public class EntityTransferencia {
     @Getter @Setter
     private int chave;
 
-    public EntityTransferencia(){
+    protected EntityTransferencia(){
 
     }
     public EntityTransferencia(int valor, int chave,  Integer id ) {

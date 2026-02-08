@@ -21,7 +21,7 @@ public class EntitySaque {
     @Getter @Setter
     private int saldo;
 
-    public EntitySaque() {
+    protected EntitySaque() {
 
     }
     public EntitySaque(int valor, int saldo, Integer id) {
