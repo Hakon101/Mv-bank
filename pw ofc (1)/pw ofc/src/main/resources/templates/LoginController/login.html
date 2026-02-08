@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script>
+    function mostrarMensagemLogin(event) {
+      event.preventDefault();
+      alert("Login realizado com sucesso!");
+      window.location.href = "/home"; // Redireciona
+
+
+    }
+
+      function logar(){
+      let domain = "http://localhost:8080"
+
+      let path = "/logar?login="+document.getElementById("emailInput").value+"&senha="+document.getElementById("senhaInput").value;
+      let url = domain + path;
+      fetch(url);
+
+      path = "/logar/"+document.getElementById("emailInput").value+"/"+document.getElementById("senhaInput").value;
+      url = domain + path;
+      fetch(url);
+
+      path = "/logar";
+      url = domain + path;
+      fetch(url, {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json",
+    },
+      body: JSON.stringify({
+      email: document.getElementById("emailInput").value,
+      senha: document.getElementById("senhaInput").value,
+    }),
+    });
+    }
+
+  </script>
+</head>
+<body>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f1f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  form {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  input[type="submit"] {  /*cadastrar*/
+    width: 100%;
+    padding: 12px;
+    background-color: #39974e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  input[type="submit"]:hover {
+    background-color: #0d77e3;
+  }
+  p {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+  }
+  a { /*fazer login*/
+    color: #0d77e3;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+<form id="loginForm" onsubmit="fazerLogin(event)">
+  <h2>Login</h2>
+
+  <label for="email">Gmail:</label>
+  <input type="email" id="email" name="email" placeholder="seuemail@gmail.com" required>
+
+  <label for="senha">Senha:</label>
+  <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+  <input type="submit" value="Entrar">
+
+  <p>Não tem uma conta? <a href="/cadastro">Cadastre-se aqui</a></p>
+</form>
+
+<script>
+  async function fazerLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+
+    const resposta = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha })
+    });
+
+    const resultado = await resposta.json();
+
+    if (resposta.ok) {
+      alert(resultado.message);
+      window.location.href = '/home'; // redireciona após sucesso
+    } else {
+      alert(resultado.error || 'Erro ao efetuar login.');
+    }
+  }
+  if (resp.ok) {
+    localStorage.setItem("usuarioLogado", email); // salva o e-mail
+    alert(data.message);
+    window.location.href = "/home";
+  }
+</script>
+
+<script>
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>MVneoBank</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js"></script>
+  <style>
+  </style>
+</head>
+<body>
+<div id="app">
+  <h1> <center> MV NeoBank </center> </h1>
+
+  <!--Tela de cadastro-->
+  <div id="register-screen">
+
+    <h2><center> Criar Conta </center> </h2>
+    <input type="text" id="reg-name" placeholder="Nome completo" />
+    <input type="email" id="reg-email" placeholder="Email" />
+
+    <input type="text" id="reg-cpf" placeholder="CPF ou CNPJ" />
+    <input type="password" id="reg-password" placeholder="Senha" />
+    <button onclick="register()">Cadastrar</button>
+    <p>Já tem conta? <a onclick="toggleScreen('login')">Entrar</a></p>
+  </div>
+
+  <!-- Tela de login -->
+  <div id="login-screen" style="display: none;">
+    <h2>Login</h2>
+    <input type="text" id="login-cpf" placeholder="CPF ou CNPJ" />
+    <input type="password" id="login-password" placeholder="Senha" />
+    <button onclick="login()">Entrar</button>
+    <p>Não tem conta? <a onclick="toggleScreen('register')">Cadastrar</a></p>
+  </div>
+
+  <!-- Tela da conta -->
+  <div id="dashboard" style="display: none;">
+    <h2>Bem-vindo, <span id="user-name"></span></h2>
+    <p>Conta: <span id="account-number"></span> | Agência: <span id="agency-number"></span></p>
+    <p>Saldo: R$ <span id="balance">0.00</span></p>
+
+    <div class="actions">
+      <input type="number" id="amount" placeholder="Valor (R$)" />
+      <button onclick="deposit()">Depositar</button>
+      <button onclick="withdraw()">Sacar</button>
+      <button onclick="pix()">Enviar Pix</button>
+    </div>
+
+    <h3>Histórico:</h3>
+    <ul id="history"></ul>
+
+    <button onclick="logout()">Sair</button>
+  </div>
+</div>
+</body>
+</html>

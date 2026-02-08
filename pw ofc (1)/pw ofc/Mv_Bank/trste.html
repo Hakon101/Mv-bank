@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="MVneoBank - Seu banco digital completo">
+  <title>MVneoBank - Seu banco digital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+<div class="background-overlay"></div>
+<div id="app">
+  <header>
+    <div class="logo">
+      <i class="fas fa-university"></i>
+      <h1>MV NeoBank</h1>
+    </div>
+    <div id="current-time"></div>
+  </header>
+
+  <!-- Tela de cadastro -->
+  <div id="register-screen" class="screen">
+    <div class="card">
+      <h2><i class="fas fa-user-plus"></i> Criar Conta</h2>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="reg-name" placeholder="Nome completo" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="reg-email" placeholder="Email" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-id-card"></i>
+        <input type="text" id="reg-cpf" placeholder="CPF ou CNPJ" required maxlength="14" />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="reg-password" placeholder="Senha (mínimo 6 caracteres)" required minlength="6" />
+        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('reg-password', this)"></i>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="reg-confirm-password" placeholder="Confirmar Senha" required />
+      </div>
+      <button class="btn-primary" onclick="register()">
+        <i class="fas fa-check-circle"></i> Cadastrar
+      </button>
+      <p class="switch-screen">Já tem conta? <a onclick="toggleScreen('login')">Entrar</a></p>
+      <div class="terms">
+        <input type="checkbox" id="accept-terms" required />
+        <label for="accept-terms">Concordo com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tela de login -->
+  <div id="login-screen" class="screen" style="display: none;">
+    <div class="card">
+      <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+      <div class="input-group">
+        <i class="fas fa-id-card"></i>
+        <input type="text" id="login-cpf" placeholder="CPF ou CNPJ" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="login-password" placeholder="Senha" required />
+        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('login-password', this)"></i>
+      </div>
+      <button class="btn-primary" onclick="login()">
+        <i class="fas fa-sign-in-alt"></i> Entrar
+      </button>
+      <p class="forgot-password"><a onclick="showForgotPassword()">Esqueceu a senha?</a></p>
+      <p class="switch-screen">Não tem conta? <a onclick="toggleScreen('register')">Cadastre-se</a></p>
+    </div>
+  </div>
+
+  <!-- Tela de recuperação de senha -->
+  <div id="forgot-password-screen" class="screen" style="display: none;">
+    <div class="card">
+      <h2><i class="fas fa-key"></i> Recuperar Senha</h2>
+      <p>Informe seu CPF/CNPJ para receber instruções de recuperação:</p>
+      <div class="input-group">
+        <i class="fas fa-id-card"></i>
+        <input type="text" id="recovery-cpf" placeholder="CPF ou CNPJ" required />
+      </div>
+      <button class="btn-primary" onclick="sendRecovery()">
+        <i class="fas fa-paper-plane"></i> Enviar Instruções
+      </button>
+      <button class="btn-secondary" onclick="toggleScreen('login')">
+        <i class="fas fa-arrow-left"></i> Voltar ao Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Tela da conta -->
+  <div id="dashboard" class="screen" style="display: none;">
+    <div class="user-header">
+      <div class="user-info">
+        <div class="avatar"><i class="fas fa-user-circle"></i></div>
+        <div>
+          <h2 id="user-name"></h2>
+          <p class="account-info">
+            <span id="account-number"></span> • Ag. <span id="agency-number"></span>
+          </p>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()" title="Sair">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+
+    <div class="balance-card">
+      <p>Saldo disponível</p>
+      <h3>R$ <span id="balance">0,00</span></h3>
+      <div class="balance-actions">
+        <button onclick="showDepositModal()"><i class="fas fa-arrow-down"></i> Depositar</button>
+        <button onclick="showWithdrawModal()"><i class="fas fa-arrow-up"></i> Sacar</button>
+        <button onclick="showPixModal()"><i class="fas fa-exchange-alt"></i> Pix</button>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <button onclick="showTransferModal()">
+        <i class="fas fa-paper-plane"></i>
+        <span>Transferência</span>
+      </button>
+      <button onclick="showCards()">
+        <i class="far fa-credit-card"></i>
+        <span>Cartões</span>
+      </button>
+      <button onclick="showInvestments()">
+        <i class="fas fa-chart-line"></i>
+        <span>Investir</span>
+      </button>
+      <button onclick="showSettings()">
+        <i class="fas fa-cog"></i>
+        <span>Configurações</span>
+      </button>
+    </div>
+
+    <div class="transactions">
+      <h3><i class="fas fa-history"></i> Histórico de Transações</h3>
+      <div class="transaction-filters">
+        <select id="filter-period">
+          <option value="7">Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+          <option value="90">Últimos 3 meses</option>
+          <option value="all">Todo período</option>
+        </select>
+        <select id="filter-type">
+          <option value="all">Todas transações</option>
+          <option value="deposit">Depósitos</option>
+          <option value="withdraw">Saques</option>
+          <option value="pix">Pix</option>
+          <option value="transfer">Transferências</option>
+        </select>
+      </div>
+      <ul id="history"></ul>
+    </div>
+  </div>
+
+  <!-- Modal de Depósito -->
+  <div id="deposit-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('deposit-modal')">&times;</span>
+      <h3><i class="fas fa-arrow-down"></i> Depositar</h3>
+      <div class="input-group">
+        <i class="fas fa-money-bill-wave"></i>
+        <input type="number" id="deposit-amount" placeholder="Valor (R$)" step="0.01" min="0.01" />
+      </div>
+      <p class="modal-info">Depósitos são creditados imediatamente em sua conta.</p>
+      <button class="btn-primary" onclick="deposit()">Confirmar Depósito</button>
+    </div>
+  </div>
+
+  <!-- Modal de Saque -->
+  <div id="withdraw-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('withdraw-modal')">&times;</span>
+      <h3><i class="fas fa-arrow-up"></i> Sacar</h3>
+      <div class="input-group">
+        <i class="fas fa-money-bill-wave"></i>
+        <input type="number" id="withdraw-amount" placeholder="Valor (R$)" step="0.01" min="0.01" />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-map-marker-alt"></i>
+        <select id="withdraw-location">
+          <option value="">Selecione um local de saque</option>
+          <option value="ATM-1234">Caixa Eletrônico 1234 - Av. Principal, 100</option>
+          <option value="ATM-5678">Caixa Eletrônico 5678 - Rua Secundária, 200</option>
+        </select>
+      </div>
+      <p class="modal-info">Taxa de saque: R$ 0,00 (isenção até 4 saques/mês)</p>
+      <button class="btn-primary" onclick="withdraw()">Confirmar Saque</button>
+    </div>
+  </div>
+
+  <!-- Modal de Pix -->
+  <div id="pix-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('pix-modal')">&times;</span>
+      <h3><i class="fas fa-exchange-alt"></i> Enviar Pix</h3>
+      <div class="pix-tabs">
+        <button class="tab active" onclick="changePixTab('cpf')">CPF/CNPJ</button>
+        <button class="tab" onclick="changePixTab('email')">Email</button>
+        <button class="tab" onclick="changePixTab('phone')">Telefone</button>
+        <button class="tab" onclick="changePixTab('key')">Chave Aleatória</button>
+      </div>
+      <div id="pix-cpf-tab" class="pix-tab-content">
+        <div class="input-group">
+          <i class="fas fa-id-card"></i>
+          <input type="text" id="pix-cpf" placeholder="CPF ou CNPJ do destinatário" />
+        </div>
+      </div>
+      <div id="pix-email-tab" class="pix-tab-content" style="display: none;">
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="pix-email" placeholder="Email do destinatário" />
+        </div>
+      </div>
+      <div id="pix-phone-tab" class="pix-tab-content" style="display: none;">
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="tel" id="pix-phone" placeholder="Telefone do destinatário" />
+        </div>
+      </div>
+      <div id="pix-key-tab" class="pix-tab-content" style="display: none;">
+        <div class="input-group">
+          <i class="fas fa-key"></i>
+          <input type="text" id="pix-key" placeholder="Chave Pix do destinatário" />
+        </div>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-money-bill-wave"></i>
+        <input type="number" id="pix-amount" placeholder="Valor (R$)" step="0.01" min="0.01" />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-comment"></i>
+        <input type="text" id="pix-description" placeholder="Descrição (opcional)" maxlength="50" />
+      </div>
+      <p class="modal-info">Transações via Pix são instantâneas e gratuitas.</p>
+      <button class="btn-primary" onclick="pix()">Confirmar Pix</button>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação -->
+  <div id="confirmation-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3 id="confirmation-title"></h3>
+      <p id="confirmation-message"></p>
+      <div class="confirmation-buttons">
+        <button class="btn-secondary" onclick="closeModal('confirmation-modal')">Cancelar</button>
+        <button class="btn-primary" id="confirmation-action">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Loading -->
+  <div id="loading-modal" class="modal" style="display: none;">
+    <div class="modal-content loading">
+      <div class="spinner"></div>
+      <p id="loading-message">Processando sua transação...</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>MVneoBank &copy; 2023 - Todos os direitos reservados</p>
+  <div class="footer-links">
+    <a href="#">Termos de Uso</a>
+    <a href="#">Política de Privacidade</a>
+    <a href="#">Ajuda</a>
+    <a href="#">Fale Conosco</a>
+  </div>
+</footer>
+</body>
+</html>
