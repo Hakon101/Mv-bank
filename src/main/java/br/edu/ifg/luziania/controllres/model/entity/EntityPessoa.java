@@ -13,9 +13,9 @@ import lombok.Setter;
 public class EntityPessoa {
     //chave primaria
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_seq")
+    @SequenceGenerator(name = "pessoa_seq", sequenceName = "entitypessoa_id_seq", allocationSize = 1, initialValue = 2)
 
-     @Getter @Setter
     private Integer id;
 
     @Getter @Setter

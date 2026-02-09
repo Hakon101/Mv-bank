@@ -6,6 +6,9 @@ public class CadastroDTO {
     private String email;
     private String senha;
 
+    public CadastroDTO() {
+
+    }
 
     public CadastroDTO(String nome, String email, String senha) {
         this.nome = nome;

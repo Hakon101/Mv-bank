@@ -118,19 +118,18 @@
 
     const dados = { nome, email, senha };
 
-    const resposta = await fetch(window.location.origin + '/api/cadastro',{
+    const resposta = await fetch('/cadastro/salvar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dados)
     });
 
-    const resultado = await resposta.json();
-
     if (resposta.ok) {
-      alert(resultado.message);
-      window.location.href = '/login';
+      alert("Cadastro realizado!");
+      window.location.href = "/"; // Redireciona para o login
     } else {
-      alert(resultado.error || 'Erro ao cadastrar usuário.');
+      const erro = await resposta.json();
+      alert(erro.error || 'Erro ao cadastrar usuário.');
     }
   }
 </script>
