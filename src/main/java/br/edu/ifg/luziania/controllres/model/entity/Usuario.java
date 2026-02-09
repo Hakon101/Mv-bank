@@ -24,7 +24,7 @@ import lombok.Setter;
         }
 
         public Usuario(Integer id, String nome, String email, String senha,double saldo){
-            super(id, nome, email, senha);
+            super(id, nome, email, senha,"usuario");
             this.saldo = saldo;
         }
 

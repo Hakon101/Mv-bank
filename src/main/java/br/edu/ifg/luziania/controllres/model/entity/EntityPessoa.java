@@ -30,14 +30,19 @@ public class EntityPessoa {
     @Column(nullable = false)
     private String senha;
 
+    @Getter @Setter
+    @Column(nullable = false)
+    private String tipo;
+
 protected EntityPessoa(){
 
 }
 
-    public EntityPessoa(Integer id, String nome, String email, String senha) {
+    public EntityPessoa(Integer id, String nome, String email, String senha, String tipo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.tipo = tipo;
     }
 }
