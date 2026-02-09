@@ -1,7 +1,7 @@
 package br.edu.ifg.luziania.controllres.controller;
 
 import br.edu.ifg.luziania.controllres.dto.LoginDTO;
-import br.edu.ifg.luziania.controllres.model.bo.LoguinBO; // Verifique se o nome está correto (Loguin ou Login)
+import br.edu.ifg.luziania.controllres.model.bo.AutenticacaoBO; // Verifique se o nome está correto (Loguin ou Login)
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.Response;
 public class LoginController {
 
     @Inject
-    LoguinBO loginBO; // Injeta a lógica de negócio
+    AutenticacaoBO loginBO; // Injeta a lógica de negócio
 
     @CheckedTemplate
     public static class Templates {
@@ -31,9 +31,7 @@ public class LoginController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response logar(LoginDTO loginDTO) {
-        String tipo = loginBO.login(loginDTO);
-
-        System.out.println("Tipo: "+tipo);
+        String tipo = loginBO.Autenticar(loginDTO);
 
         if (tipo != null) {
             // Retorna o tipo para o frontend saber para onde redirecionar
