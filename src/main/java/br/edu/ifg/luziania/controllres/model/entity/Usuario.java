@@ -16,11 +16,17 @@ import lombok.Setter;
 
     public class Usuario extends EntityPessoa{
 
-        protected Usuario() {
+        @Getter @Setter
+        private double saldo;
+
+
+        public Usuario() {
         }
 
-        public Usuario(Integer id, String nome, String email, String senha){
+        public Usuario(Integer id, String nome, String email, String senha,double saldo){
             super(id, nome, email, senha);
+            this.saldo = saldo;
         }
+
 
     }

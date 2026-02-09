@@ -3,10 +3,12 @@ package br.edu.ifg.luziania.controllres.dto;
 public class TransferenciaDTO {
 
     private int valor;
-    private int chave;
-    public TransferenciaDTO(int valor, int chave) {
+    private String contadestino;
+    private String contaorigem;
+    public TransferenciaDTO(int valor, String chavedestino, String chaveorigem) {
         this.valor = valor;
-        this.chave = chave;
+        this.contadestino = chavedestino;
+        this.contaorigem = chaveorigem;
     }
 
     public int getValor() {
@@ -17,11 +19,19 @@ public class TransferenciaDTO {
         this.valor = valor;
     }
 
-    public int getChave() {
-        return chave;
+    public String getContadestino() {
+        return contadestino;
     }
 
-    public void setChave(int chave) {
-        this.chave = chave;
+    public void setContadestino(String contadestino) {
+        this.contadestino = contadestino;
+    }
+
+    public String getContaorigem() {
+        return contaorigem;
+    }
+
+    public void setContaorigem(String contaorigem) {
+        this.contaorigem = contaorigem;
     }
 }

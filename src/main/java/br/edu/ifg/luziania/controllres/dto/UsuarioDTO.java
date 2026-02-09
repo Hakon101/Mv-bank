@@ -14,15 +14,15 @@ public class UsuarioDTO {
     private String email;
 
     @Getter @Setter
-    private boolean eAdmin;
+    private double saldo;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Integer id, String nome, String email, boolean eAdmin) {
+    public UsuarioDTO(Integer id, String nome, String email, double saldo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
-        this.eAdmin = eAdmin;
+        this.saldo = saldo;
     }
 }

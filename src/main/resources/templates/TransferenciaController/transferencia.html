@@ -54,7 +54,7 @@
       </div>
 
       <div class="mb-4">
-        <label for="chaveDestinatario" class="block text-gray-700 font-semibold mb-2">Chave do Destinatário</label>
+        <label for="chaveDestinatario" class="block text-gray-700 font-semibold mb-2">número da conta</label>
         <input type="text" id="chaveDestinatario" name="chaveDestinatario" class="form-control" placeholder="Digite a chave" required>
       </div>
 
@@ -69,6 +69,38 @@
     </form>
   </div>
 </main>
+
+<SCRIPT>
+  async function transferir(event){
+    event.preventDefault();
+
+    const valor = document.getElementById('valor').value;
+    const conta = document.getElementById('chaveDestinatario').value;
+
+    if (conta == null || valor <=0){
+      alert('dados inválidos')
+      return;
+    }
+    const dados = {
+      valor, conta
+    }
+
+    const resposta = await fetch('/transferencia/transferir', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dados)
+    });
+
+    if (resposta.ok) {
+      alert(resposta.message);
+      window.location.href = "/home"; // Redireciona para home
+    } else {
+      const erro = await resposta.json();
+      alert(erro.error);
+    }
+
+  }
+</SCRIPT>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

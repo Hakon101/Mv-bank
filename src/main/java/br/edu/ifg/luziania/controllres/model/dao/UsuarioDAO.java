@@ -8,6 +8,8 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import java.util.List;
+
+import jakarta.persistence.TypedQuery;
 import org.hibernate.annotations.processing.HQL;
 
 @RequestScoped
@@ -16,13 +18,13 @@ public class UsuarioDAO {
     @Inject
     EntityManager entityManager;
 
-    public Usuario salvar(Usuario usuario) {
+    public void salvar(Usuario usuario) {
         entityManager.persist(usuario);
-        return usuario;
+
 
     }
-    public Usuario atualizar(Usuario usuario) {
-        return entityManager.merge(usuario);
+    public void atualizar(Usuario usuario) {
+        entityManager.merge(usuario);
 
     }
     public void deletar(Usuario usuario) {
@@ -43,5 +45,14 @@ public class UsuarioDAO {
         // Retorna a pessoa encontrada ou null
         return (EntityPessoa) query.getSingleResultOrNull();
     }
+    public Usuario buscarUsuarioporemail(String email) {
+        String jpql = "from Usuario where email = :email";
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("email", email);
+
+        // Retorna a pessoa encontrada ou null
+        return (Usuario) query.getSingleResultOrNull();
+    }
+
 
 }
