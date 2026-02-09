@@ -11,7 +11,7 @@ public class JWTResponseFilter {
         String token = response.getHeaderString("token");
         if (token != null) {
             String cookie = "token=" + response.getHeaderString("token")
-                + "; path=/; Max-Age=3600; HttpOnly; secure; SameSite=Strict";
+                + "; path=/; Max-Age=3600; HttpOnly; SameSite=Lax";
             response.getHeaders().add("Set-Cookie", cookie);
         }
     }
