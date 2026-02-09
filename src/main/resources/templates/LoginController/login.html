@@ -134,28 +134,43 @@
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
 
-    const resposta = await fetch('/logar', { // Chama o @Path("/logar") criado acima
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        usuario: email, // O DTO usa "usuario"
-        senha: senha
-      })
-    });
+    try {
+      const resposta = await fetch('/logar', { // Chama o @Path("/logar") criado acima
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          usuario: email, // O DTO usa "usuario"
+          senha: senha
+        })
+      });
 
-// É aqui que você define a variável que o JavaScript não estava encontrando
-    const resultado = await resposta.json();
+      console.log(resposta)
 
-    if (resposta.ok) {
-      alert(resultado.message);
-      // Agora 'resultado.tipo' deve existir se o backend enviou
-      if (resultado.tipo === "admin") {
-        window.location.href = "/homeAdm";
-      } else {
-        window.location.href = "/home";
+      let resultado = null;
+      try {
+        // Tenta ler o JSON somente se existir conteúdo
+        const texto = await resposta.text();
+        if (texto) {
+          resultado = JSON.parse(texto);
+        }
+      } catch (e) {
+        console.log("Resposta sem JSON (provavelmente erro vazio do servidor)");
       }
-    } else {
-      alert(resultado.error || 'Erro ao efetuar login.');
+
+      if (resposta.ok) {
+        alert(resultado?.message || "Login realizado!");
+        if (resultado?.tipo === "admin") {
+          window.location.href = "/homeAdm";
+        } else {
+          window.location.href = "/home";
+        }
+      } else {
+        // Se tiver resultado.error usa ele, senão usa mensagem genérica
+        alert(resultado?.error || 'Usuário ou senha inválidos (Erro 401)');
+      }
+    } catch (e) {
+      console.error('Erro na requisição:', e);
+      alert('Erro de conexão com o servidor.');
     }
   }
 </script>

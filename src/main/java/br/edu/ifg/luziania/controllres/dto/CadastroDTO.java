@@ -5,15 +5,17 @@ public class CadastroDTO {
     private String nome;
     private String email;
     private String senha;
+    private String tipo;
 
     public CadastroDTO() {
 
     }
 
-    public CadastroDTO(String nome, String email, String senha) {
+    public CadastroDTO(String nome, String email, String senha, String tipo) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.tipo = tipo;
     }
 
     public String getNome() {
@@ -38,5 +40,13 @@ public class CadastroDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

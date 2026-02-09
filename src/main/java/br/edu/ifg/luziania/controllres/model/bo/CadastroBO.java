@@ -21,6 +21,7 @@ public class CadastroBO {
             novoUsuario.setNome(dto.getNome());
             novoUsuario.setEmail(dto.getEmail());
             novoUsuario.setSenha(dto.getSenha()); // Em produção, use criptografia
+            novoUsuario.setTipo("usuario");
             novoUsuario.setSaldo(100.0);
 
             usuarioDAO.salvar(novoUsuario);
