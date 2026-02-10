@@ -1,6 +1,7 @@
 package br.edu.ifg.luziania.controllres.model.entity;
 
 
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,9 @@ import lombok.Setter;
 public class EntityPessoa {
     //chave primaria
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_seq")
-    @SequenceGenerator(name = "pessoa_seq", sequenceName = "entitypessoa_id_seq", allocationSize = 1, initialValue = 2)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "pessoa_seq")
+    //@SequenceGenerator(name = "pessoa_seq", sequenceName = "entitypessoa_id_seq", allocationSize = 1, initialValue = 2)
+    @Getter @Setter
 
     private Integer id;
 
@@ -38,11 +40,10 @@ protected EntityPessoa(){
 
 }
 
-    public EntityPessoa(Integer id, String nome, String email, String senha, String tipo) {
-        this.id = id;
+    public EntityPessoa(String nome, String email, String senha, String tipo) {
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
+        this.senha = BcryptUtil.bcryptHash(senha);
         this.tipo = tipo;
     }
 }

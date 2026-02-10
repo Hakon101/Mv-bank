@@ -3,6 +3,7 @@ package br.edu.ifg.luziania.controllres.model.bo;
 import br.edu.ifg.luziania.controllres.dto.CadastroDTO;
 import br.edu.ifg.luziania.controllres.model.dao.UsuarioDAO;
 import br.edu.ifg.luziania.controllres.model.entity.Usuario;
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -20,7 +21,7 @@ public class CadastroBO {
             Usuario novoUsuario = new Usuario();
             novoUsuario.setNome(dto.getNome());
             novoUsuario.setEmail(dto.getEmail());
-            novoUsuario.setSenha(dto.getSenha()); // Em produção, use criptografia
+            novoUsuario.setSenha(BcryptUtil.bcryptHash(dto.getSenha())); // aqui criptografa a senha
             novoUsuario.setTipo("usuario");
             novoUsuario.setSaldo(100.0);
 

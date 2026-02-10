@@ -23,8 +23,8 @@ import lombok.Setter;
         public Usuario() {
         }
 
-        public Usuario(Integer id, String nome, String email, String senha,double saldo){
-            super(id, nome, email, senha,"usuario");
+        public Usuario(String nome, String email, String senha,double saldo){
+            super(nome, email, senha,"usuario");
             this.saldo = saldo;
         }
 

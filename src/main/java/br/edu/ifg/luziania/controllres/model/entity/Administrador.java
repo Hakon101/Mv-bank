@@ -15,8 +15,8 @@ import lombok.Setter;
         @Getter @Setter
         private int nivel;
 
-        public Administrador(Integer id, String nome, String email, String senha,int nivel){
-            super(id,nome,email,senha,"admin");
+        public Administrador( String nome, String email, String senha,int nivel){
+            super(nome,email,senha,"admin");
         this.nivel = nivel;
         }
 

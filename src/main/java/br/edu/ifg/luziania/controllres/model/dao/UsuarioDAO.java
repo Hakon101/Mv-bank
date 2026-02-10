@@ -1,6 +1,5 @@
 package br.edu.ifg.luziania.controllres.model.dao;
 
-import br.edu.ifg.luziania.controllres.dto.LoginDTO;
 import br.edu.ifg.luziania.controllres.model.entity.EntityPessoa;
 import br.edu.ifg.luziania.controllres.model.entity.Usuario;
 import jakarta.enterprise.context.RequestScoped;
@@ -8,9 +7,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import java.util.List;
-
-import jakarta.persistence.TypedQuery;
-import org.hibernate.annotations.processing.HQL;
 
 @RequestScoped
 public class UsuarioDAO {
@@ -36,11 +32,10 @@ public class UsuarioDAO {
         return entityManager.createQuery(jpql, Usuario.class).getResultList();
     }
 
-    public EntityPessoa buscarPessoa(LoginDTO credenciais) {
-        String jpql = "from EntityPessoa p where p.email = :email and p.senha = :senha";
+    public EntityPessoa buscarPessoa(String email) {
+        String jpql = "from EntityPessoa p where p.email = :email";
         Query query = entityManager.createQuery(jpql);
-        query.setParameter("email", credenciais.getUsuario());
-        query.setParameter("senha", credenciais.getSenha());
+        query.setParameter("email", email);
 
         // Retorna a pessoa encontrada ou null
         return (EntityPessoa) query.getSingleResultOrNull();
@@ -53,6 +48,13 @@ public class UsuarioDAO {
         // Retorna a pessoa encontrada ou null
         return (Usuario) query.getSingleResultOrNull();
     }
+    public Usuario buscarUsuarioPorNumeroDaConta(int conta) {
+        String jpql = "from Usuario where id = :conta";
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("conta", conta);
 
+        // Retorna a pessoa encontrada ou null
+        return (Usuario) query.getSingleResultOrNull();
+    }
 
 }
