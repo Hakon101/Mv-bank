@@ -19,13 +19,13 @@ public class JWTController {
         String token = Jwt
                 .issuer("http://localhost/issuer")
                 .upn(cadastroDTO.getEmail())
-                .groups(cadastroDTO.getTipo())  //Perfil (Role)
+                .groups(cadastroDTO.getTipo())  //Verificar se pertece a um grupo de usuarios ou admin
                 .claim("Nome", cadastroDTO.getNome())
                 .claim("Email", cadastroDTO.getEmail())
 
 
 
-                .sign();
+                .sign(); // assina o token para garantir integridade
         String jsonBody = "{\"message\":\"Token jwt criado e guardado no cookie\", \"tipo\":\"" + cadastroDTO.getTipo() + "\"}";
         return Response
                 .ok(jsonBody)

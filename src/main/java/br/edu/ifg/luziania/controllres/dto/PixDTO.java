@@ -1,5 +1,5 @@
 package br.edu.ifg.luziania.controllres.dto;
-
+/// ///
 public class PixDTO {
 
     private String chaveOrigem;

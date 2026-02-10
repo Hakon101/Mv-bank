@@ -43,6 +43,6 @@ public class AutenticacaoBO {
 
         CadastroDTO cadastroDTO = new CadastroDTO(pessoa.getNome(), pessoa.getEmail(), credenciais.getSenha(), pessoa.getTipo());
 
-        return jwt.generateJWT(cadastroDTO);
+        return jwt.generateJWT(cadastroDTO); //retorna para o logincontroller
     }
 }
