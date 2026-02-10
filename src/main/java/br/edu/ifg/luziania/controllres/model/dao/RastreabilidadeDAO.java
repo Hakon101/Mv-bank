@@ -11,9 +11,10 @@ import java.util.List;
 public class RastreabilidadeDAO {
     @Inject
     EntityManager entityManager;
-    public void salvar(RastreabilidadeEntity registro){
+    public void salvar(RastreabilidadeEntity registro){ //função salvar registros de transferências no banco
         entityManager.persist(registro);
     }
+    //retorna a lista de todas as transferências realizadas
     public List<RastreabilidadeEntity> listarAtividades(){
         return entityManager.createQuery("FROM RastreabilidadeEntity r ORDER BY r.hora DESC", RastreabilidadeEntity.class)
                 .getResultList();

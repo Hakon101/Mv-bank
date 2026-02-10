@@ -31,19 +31,24 @@ public class TransferenciaBO {
 
                 Usuario usuarioorigem = usuarioDAO.buscarUsuarioporemail(email);
                 Usuario usuariodestino = usuarioDAO.buscarUsuarioPorNumeroDaConta(transferencia.getContaDestino());
+
+                //verifica se o outro usario existe
                 if (usuarioorigem == null || usuariodestino == null){
                     System.out.println("Essa conta nao existe");
                  return false;
                 }
+                //verifica se o usuario da conta tem saldo suficiente
                 if (usuarioorigem.getSaldo() < transferencia.getValor()){
                     System.out.println("Saldo insuficiente");
                     return false;
                 }
+
                 usuarioorigem.setSaldo(usuarioorigem.getSaldo() - transferencia.getValor());
                 usuariodestino.setSaldo(usuariodestino.getSaldo() + transferencia.getValor());
 
                 RastreabilidadeEntity registro = new RastreabilidadeEntity();
                 registro.setTipo("transferencia");
+                //registros de transferencia para armazenar os valores
                 registro.setValor(transferencia.getValor());
                 registro.setRemetente(usuarioorigem.getEmail());
                 registro.setDestinatario(usuariodestino.getEmail());
