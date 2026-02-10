@@ -28,5 +28,8 @@ import lombok.Setter;
             this.saldo = saldo;
         }
 
+        public String getSaldoFormatado() {
+            return String.format("%,.2f", this.saldo);
+        }
 
     }
