@@ -36,7 +36,7 @@ public class RastreabilidadeEntity {
     @Column(nullable = false, updatable = false)
     private LocalDateTime hora;
 
-    protected RastreabilidadeEntity() {
+    public RastreabilidadeEntity() {
     }
 
     public RastreabilidadeEntity(String tipo, double valor, String destinatario, String remetente) {

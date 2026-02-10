@@ -18,28 +18,6 @@ public class RastreabilidadeBO implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext request) {
 
-        RastreabilidadeEntity r = new RastreabilidadeEntity();
-
-        r.setEndpoint(request.getUriInfo().getPath());
-        r.setMetodoHttp(request.getMethod());
-        r.setController(extrairController(request.getUriInfo().getPath()));
-
-        r.setIp(
-                request.getHeaderString("X-Forwarded-For") != null
-                        ? request.getHeaderString("X-Forwarded-For")
-                        : request.getHeaderString("Host")
-        );
-
-        // usuário pode vir do login
-        String usuario = request.getHeaderString("X-USER");
-        r.setUsuario(usuario != null ? usuario : "anonimo");
-
-        dao.salvar(r);
-    }
-
-    private String extrairController(String path) {
-        if (path == null || path.isEmpty()) return "desconhecido";
-        return path.split("/admin/rastreabilidade")[0];
     }
 }
 
