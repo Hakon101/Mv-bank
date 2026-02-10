@@ -4,6 +4,23 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
 
+## Gerar chaves
+### 1. Gera uma chave RSA de 2048 bits (formato antigo PKCS#1)
+```shell script
+openssl genrsa -out rsaPrivateKey.pem 2048
+```
+
+### 2. Converte para o formato PKCS#8 (que o Quarkus prefere e não tem senha)
+```shell script
+openssl pkcs8 -topk8 -nocrypt -inform PEM -outform PEM -in rsaPrivateKey.pem -out privateKey.pem
+```
+### 3. Gera uma chave pública
+```shell script
+openssl rsa -in privateKey.pem -pubout -out publicKey.pem
+```
+
+Em seguida exclua o arquivo `rsaPrivateKey.pem` gerado e mova os arquivos `privateKey.pem` e `publicKey.pem` para a pasta `/src/resources/`.
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
