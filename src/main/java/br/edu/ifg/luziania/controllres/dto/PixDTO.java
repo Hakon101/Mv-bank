@@ -2,27 +2,37 @@ package br.edu.ifg.luziania.controllres.dto;
 
 public class PixDTO {
 
-    private int chave;
-    private int valor;
+    private String chaveOrigem;
+    private String chaveDestino;
+    private double valor;
 
-    public PixDTO(int chave, int valor) {
-        this.chave = chave;
+    public PixDTO(String chaveOrigem, String chaveDestino, double valor) {
+        this.chaveOrigem = chaveOrigem;
+        this.chaveDestino = chaveDestino;
         this.valor = valor;
     }
 
-    public int getChave() {
-        return chave;
+    public String getChaveDestino() {
+        return chaveDestino;
     }
 
-    public void setChave(int chave) {
-        this.chave = chave;
+    public void setChaveDestino(String chaveDestino) {
+        this.chaveDestino = chaveDestino;
     }
 
-    public int getValor() {
+    public String getChaveOrigem() {
+        return chaveOrigem;
+    }
+
+    public void setChaveOrigem(String chaveOrigem) {
+        this.chaveOrigem = chaveOrigem;
+    }
+
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 }

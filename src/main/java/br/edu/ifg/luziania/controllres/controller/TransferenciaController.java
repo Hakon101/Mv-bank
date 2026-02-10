@@ -1,8 +1,6 @@
 package br.edu.ifg.luziania.controllres.controller;
 
-import br.edu.ifg.luziania.controllres.dto.CadastroDTO;
 import br.edu.ifg.luziania.controllres.dto.TransferenciaDTO;
-import br.edu.ifg.luziania.controllres.model.bo.CadastroBO;
 import br.edu.ifg.luziania.controllres.model.bo.TransferenciaBO;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
@@ -32,10 +30,12 @@ import jakarta.ws.rs.core.Response;
     @Path("/transferir")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response trasferir(TransferenciaDTO transferenciaDTO) {
+    public Response transferir(TransferenciaDTO transferenciaDTO) {
 
-        boolean sucesso = transferenciaBO.transferencia(transferenciaDTO);
 
+        boolean sucesso = transferenciaBO.transferenciaBancaria(transferenciaDTO);
+
+        System.out.println("Sucesso? "+sucesso);
         if (sucesso) {
             return Response.status(Response.Status.CREATED)
                     .entity("{\"message\":\"Transferência realizada com sucesso!\"}").build();

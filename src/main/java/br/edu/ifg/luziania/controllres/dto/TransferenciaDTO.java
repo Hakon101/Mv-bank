@@ -1,37 +1,37 @@
 package br.edu.ifg.luziania.controllres.dto;
 
+import br.edu.ifg.luziania.controllres.model.dao.UsuarioDAO;
+import br.edu.ifg.luziania.controllres.model.entity.Usuario;
+import jakarta.inject.Inject;
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
 public class TransferenciaDTO {
 
-    private int valor;
-    private String contadestino;
-    private String contaorigem;
-    public TransferenciaDTO(int valor, String chavedestino, String chaveorigem) {
-        this.valor = valor;
-        this.contadestino = chavedestino;
-        this.contaorigem = chaveorigem;
+    private double valor;
+    private int contaDestino;
+
+    public TransferenciaDTO() {
     }
 
-    public int getValor() {
+    public TransferenciaDTO(double valor, int chavedestino) {
+        this.valor = valor;
+        this.contaDestino = chavedestino;
+    }
+
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
-    public String getContadestino() {
-        return contadestino;
+    public int getContaDestino() {
+        return contaDestino;
     }
 
-    public void setContadestino(String contadestino) {
-        this.contadestino = contadestino;
+    public void setContaDestino(int contaDestino) {
+        this.contaDestino = contaDestino;
     }
 
-    public String getContaorigem() {
-        return contaorigem;
-    }
-
-    public void setContaorigem(String contaorigem) {
-        this.contaorigem = contaorigem;
-    }
 }

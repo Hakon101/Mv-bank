@@ -47,7 +47,7 @@
   <div class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
     <h1 class="text-2xl font-bold text-center text-success mb-6">Área de Transferência - MV NeoBank</h1>
 
-    <form>
+    <form id="transferenciaForm" onsubmit=transferir(event)>
       <div class="mb-4">
         <label for="valor" class="block text-gray-700 font-semibold mb-2">Valor da Transferência</label>
         <input type="number" id="valor" name="valor" step="0.01" class="form-control" placeholder="R$ 0,00" required>
@@ -70,7 +70,7 @@
   </div>
 </main>
 
-<SCRIPT>
+<script>
   async function transferir(event){
     event.preventDefault();
 
@@ -82,8 +82,10 @@
       return;
     }
     const dados = {
-      valor, conta
+      valor: valor,
+      contaDestino: conta
     }
+
 
     const resposta = await fetch('/transferencia/transferir', {
       method: 'POST',
@@ -92,7 +94,9 @@
     });
 
     if (resposta.ok) {
-      alert(resposta.message);
+      const dados = await resposta.json();
+
+      alert(dados.message);
       window.location.href = "/home"; // Redireciona para home
     } else {
       const erro = await resposta.json();
@@ -100,7 +104,7 @@
     }
 
   }
-</SCRIPT>
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
